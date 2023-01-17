@@ -11,28 +11,28 @@
 
     </head>
     <body>
-    <table>
-        <tr>
-            <th>商品名</th>
-            <th>価格</th>
-        </tr>
+        <table>
+            <tr>
+                <th>商品名</th>
+                <th>価格</th>
+            </tr>
 
-        @foreach ($products as $product)
+            @foreach ($products as $product)
 
-            @if ($product->stock === 1)
-                <tr>
-                    <td>{{ $product->name }}</td>
-                    <td>{{ $product->price }}</td>
-                </tr>
-            @else
-                <tr>
-                    <td>{{ $product->name }}</td>
-                    <td>SOLD OUT</td>
-                </tr>
-            @endif
+                @if ($product->stock === 0)
+                    <tr>
+                        <td>{{ $product->name }}</td>
+                        <td>SOLD OUT</td>
+                    </tr>
+                @else
+                    <tr>
+                        <td>{{ $product->name }}</td>
+                        <td>{{ $product->price }}</td>
+                    </tr>
+                @endif
 
-        @endforeach
+            @endforeach
 
-    </table>
-</body>
+        </table>
+    </body>
 </html>

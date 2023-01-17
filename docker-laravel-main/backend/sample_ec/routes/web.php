@@ -15,4 +15,16 @@ Route::get('/top', function () {
     return view('top');
 });
 
-Route::get('/products', 'ProductController@index');
+Route::get('/new', function () {
+    return view('new_products');
+});
+
+Route::resource('/products', 'ProductController');
+
+Route::resource('/shops', 'ShopController')->only([
+    'new', 'index', 'show', 'edit',  'create', 'update', 'destroy'
+]);
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

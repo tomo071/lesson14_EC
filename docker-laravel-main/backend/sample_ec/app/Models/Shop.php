@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Shop extends Model
 {
-    public function prodacts(){
+    public function products(){
 
         return $this->hasMany('App/Models/Product');
     }
