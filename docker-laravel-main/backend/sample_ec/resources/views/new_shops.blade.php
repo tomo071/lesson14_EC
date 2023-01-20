@@ -11,11 +11,12 @@
 
     </head>
     <body>
-        <form action= "{{ route('products.store') }}" method="POST" id="new">
+        <form action= "{{ route('shops.store') }}" method="POST" id="new">
+        @csrf
 
             <div class="form-group">
                 <label for="subject">
-                    商品名
+                    ショップ名
                 </label>
                 <input
                     id="name"
@@ -28,7 +29,7 @@
 
             <div class="form-group">
                 <label for="subject">
-                    商品説明
+                    ショップ説明
                 </label>
                 <textarea
                     id="new"
@@ -40,32 +41,8 @@
                 </textarea>
             </div>
 
-            <div class="form-group">
-                <label for="subject">
-                    価格（円）
-                </label>
-                <input
-                    type="number"
-                    name="price"
-                    value="{{old('price')}}"
-                    class="form-control"
-                >
-            </div>
-
-            <div class="form-group">
-                <label for="subject">
-                    在庫
-                </label>
-                <input
-                    type="number"
-                    name="stock"
-                    value="{{old('stock')}}"
-                    class="form-control"
-                >
-            </div>
-
             <button type="submit" class="btn btn-primary">
-                投稿する
+                ショップ開設
             </button>
 
         </form>

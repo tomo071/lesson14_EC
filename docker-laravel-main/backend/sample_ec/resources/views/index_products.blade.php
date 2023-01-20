@@ -26,7 +26,11 @@
                     </tr>
                 @else
                     <tr>
-                        <td>{{ $product->name }}</td>
+                        <td>
+                            <a href="{{ route('products.show', $product->id) }}">
+                                {{ $product->name }}
+                            </a>
+                        </td>
                         <td>{{ $product->price }}</td>
                     </tr>
                 @endif

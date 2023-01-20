@@ -14,7 +14,7 @@ class ProductController extends Controller
 {
 
     public function create(){
-        return view('new_product');
+        return view('new_products');
     }
 
     public function store(Request $request){
@@ -36,12 +36,12 @@ class ProductController extends Controller
 
     public function index(){
         $products = product::all();
-        return view('products', compact('products'));
+        return view('index_products', compact('products'));
     }
 
     public function show($id){
         $product = product::find($id);
-        return view('show_product', compact('product'));
+        return view('show_products', compact('product'));
     }
 
 }

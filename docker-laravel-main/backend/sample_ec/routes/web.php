@@ -19,11 +19,15 @@ Route::get('/new', function () {
     return view('new_products');
 });
 
+Route::get('/message', function () {
+    return view('message');
+});
+
 Route::resource('/products', 'ProductController');
 
-Route::resource('/shops', 'ShopController')->only([
-    'new', 'index', 'show', 'edit',  'create', 'update', 'destroy'
-]);
+Route::resource('/shops', 'ShopController');
+
+Route::get('shop/my_page', 'ShopController@my_page')->name('shop.my_page');
 
 Auth::routes();
 

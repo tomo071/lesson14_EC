@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    public function user()
+    public function shop()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo('App\Models\Shop');
     }
     
     protected $fillable = ['id','shop_id', 'name', 'description', 'price', 'stock'];

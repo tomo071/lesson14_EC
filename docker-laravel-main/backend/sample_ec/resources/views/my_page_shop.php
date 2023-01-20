@@ -11,40 +11,18 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
     <body>
-        <table>
-            <tr>
-                <th>商品名</th>
-                <th>価格</th>
-            </tr>
-
-                @if ($product->stock === 1)
-                    <tr>
-                        <td>{{ $product->name }}</td>
-                        <td>{{ $product->price }}</td>
-                    </tr>
-                @else
-                    <tr>
-                        <td>{{ $product->name }}</td>
-                        <td>SOLD OUT</td>
-                    </tr>
-                @endif
-
-        </table>
         <div class="container mx-5 text-center">
             <div class="row m-4">
                 <div class="col-5 m-1">
                     <div class="m-3 text-center">
-                        <h3 class="m-1">商品名:{{ $product->name }}</h3>
-                        <h4 class="m-3">価格：{{ $product->price }}￥</h4>
-                        <a href="{{ route('shops.show',$product->shop_id) }}">
-                            {{ $product->use->id }}
-                        </a>
+                        <h3 class="m-1">{{ $shop->name }}</h3>
+                        <h4 class="m-3">{{ $shop->user_id }}</h4>
                     </div>
                 </div>
                 <div class="col-5 m-1">
                     <div class="m-3 text-center">
                         <h4 class="m-1">商品説明</h4>
-                        <p>{{ $product->description }}</p>
+                        <p>{{ $shop->description }}</p>
                     </div>
                 </div>
             </div>

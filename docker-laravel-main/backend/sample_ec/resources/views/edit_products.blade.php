@@ -12,6 +12,7 @@
     </head>
     <body>
         <form action= "{{ route('products.store') }}" method="POST" id="new">
+        @csrf
 
             <div class="form-group">
                 <label for="subject">
