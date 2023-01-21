@@ -11,11 +11,13 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
     <body>
-        <div class="container m-5 text-center">
+        <div class="container m-5">
             <div class="row">
-                <div class="text-center m-5">
-                    <h1>{{ session('message') }}</h1>
-                </div>
+                <div class="col-12  text-center">
+                    <div class="m-5">
+                        <h1>{{ session('message') }}</h1>
+                    </div>
+                </div> 
             </div>
             <div class="row m-5">
                 <div class="col-6 p-5">

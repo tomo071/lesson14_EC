@@ -46,7 +46,7 @@ class ShopController extends Controller
 
     public function my_page(){
             $my_id = Auth::id();
-            $shop = Shop::where('user_id', '=', $my_id)->first();
+            $shop = Shop::with('products')->where('user_id', '=', $my_id)->first();
             return view('my_page_shop', ['shop' => $shop]);
     }
 }

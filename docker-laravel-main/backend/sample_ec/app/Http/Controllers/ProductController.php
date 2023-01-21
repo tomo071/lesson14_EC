@@ -31,7 +31,7 @@ class ProductController extends Controller
 
         $id = $Product->id;
         
-        return redirect('products');
+        return route('products.show', ['id' => $id]);
     }
 
     public function index(){

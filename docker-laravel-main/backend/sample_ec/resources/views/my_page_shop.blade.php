@@ -15,19 +15,47 @@
             <div class="row m-4">
                 <div class="col-5 m-1">
                     <div class="m-3 text-center">
-                        <h3 class="m-1">{{ $shop->name }}</h3>
-                        <h4 class="m-3">{{ $shop->user_id }}</h4>
+                        <h3 class="m-1">shop名:{{ $shop->name }}</h3>
+                        <h4 class="m-3"> I  D :{{ $shop->user_id }}</h4>
                     </div>
                 </div>
                 <div class="col-5 m-1">
                     <div class="m-3 text-center">
-                        <h4 class="m-1">商品説明</h4>
+                        <h4 class="m-1">shop概要</h4>
                         <p>{{ $shop->description }}</p>
                     </div>
                 </div>
             </div>
             <div class="row mt-4">
-
+                <div class="col-11 mt-5">
+                    <div class="m-1 text-right">
+                        <a href="{{ route('products.create') }}">
+                            <button class="btn btn-success">新規作成</button>
+                        </a>
+                    </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">商品ID</th>
+                            <th scope="col">商品名</th>
+                            <th scope="col">価格（円）</th>
+                            <th scope="col">ざいこ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($shop->products as $product)
+                        <tr>
+                            <th scope="row">{{ $product->id }}</th>
+                            <td>{{ $product->name }}</td>
+                            <td>{{ $product->price }}</td>
+                            <a href="{{ route('products.show', $product->id) }}">
+                                <td>{{ $product->stock }}</td>
+                            </a>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </body>
