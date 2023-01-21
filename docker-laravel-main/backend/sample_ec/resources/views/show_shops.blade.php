@@ -15,7 +15,6 @@
             <div class="row m-4">
                 <div class="col-5 m-1">
                     <div class="m-3 text-center">
-                      {{ $message }}
                         <h3 class="m-1">商品名:{{ $show->name }}</h3>
                         <h4 class="m-3">価格：{{ $show->price }}￥</h4>
                         <a href="{{ route('shops.show',$product->shop_id) }}">

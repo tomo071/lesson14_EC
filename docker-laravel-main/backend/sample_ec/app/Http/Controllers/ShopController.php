@@ -20,7 +20,7 @@ class ShopController extends Controller
         $check_shop = Shop::where('user_id', '=', $my_id)->count();
 
         if($check_shop > 0){
-            return view('message')->with('message', '複数の開設は許可されていません');
+            return redirect()->route('message')->with('message', '複数の開設は許可されていません');
         }else{
             $input = $request->only('user_id','name','description');
             
@@ -44,9 +44,9 @@ class ShopController extends Controller
         return view('show_shops', compact('shop'));
     }
 
-    public function my_page($message){
+    public function my_page(){
             $my_id = Auth::id();
-            $shop = Shop::where('user_id', '=', '$my_id')->first();
-            return route('my_page_shop', ['shop' => $shop]);
+            $shop = Shop::where('user_id', '=', $my_id)->first();
+            return view('my_page_shop', ['shop' => $shop]);
     }
 }

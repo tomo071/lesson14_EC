@@ -11,16 +11,16 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
     <body>
-        <div class="container m-5">
+        <div class="container m-5 text-center">
             <div class="row">
                 <div class="text-center m-5">
-                    <h2>{{ $message }}</h2>
+                    <h1>{{ session('message') }}</h1>
                 </div>
             </div>
             <div class="row m-5">
                 <div class="col-6 p-5">
                     <div class="text-center">
-                        <a href="{{ route('/top') }}">
+                        <a href="{{ url('/top') }}">
                             <button type="button" class="btn btn-primary">
                                 トップに戻る
                             </button>
@@ -30,9 +30,7 @@
                 <div class="col-6 p-5">
                     <div class="text-center">
                         <a href="{{ route('shop.my_page') }}">
-                            <button type="button" class="btn btn-secondary">
                                 マイページへ
-                            </button>
                         </a>
                     </div>
                 </div>

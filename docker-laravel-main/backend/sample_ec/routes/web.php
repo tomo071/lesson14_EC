@@ -21,13 +21,13 @@ Route::get('/new', function () {
 
 Route::get('/message', function () {
     return view('message');
-});
+})->name('message');
 
 Route::resource('/products', 'ProductController');
 
 Route::resource('/shops', 'ShopController');
 
-Route::get('shop/my_page', 'ShopController@my_page')->name('shop.my_page');
+Route::get('/shop/my_page', 'ShopController@my_page')->name('shop.my_page');
 
 Auth::routes();
 
