@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ShopController extends Controller
 {
+
+    public function top(){
+        $shop = shop::all();
+        return view('top', compact('shop'));
+    }
+
     public function create(){
         return view('new_shops');
     }
@@ -30,13 +36,13 @@ class ShopController extends Controller
             $shop->description = $input["description"];
             $shop->save();
 
-            return route('shop.my_page');
+            return redirect(route('shop.my_page'));
         }
     }
 
     public function index(){
         $shops = shop::all();
-        return view('index', compact('shops'));
+        return view('index_shop', compact('shops'));
     }
 
     public function show($id){
@@ -45,8 +51,41 @@ class ShopController extends Controller
     }
 
     public function my_page(){
-            $my_id = Auth::id();
-            $shop = Shop::with('products')->where('user_id', '=', $my_id)->first();
-            return view('my_page_shop', ['shop' => $shop]);
+        $my_id = Auth::id();
+        $shop = Shop::where('user_id', '=', $my_id)->first();
+        $products = Shop::with('products')->where('user_id', '=', $my_id)->get();
+
+        if ($shop == null){
+            return redirect()->route('shops.create')->with('message', 'ショップを開設してください');
+        }else{
+            return view('my_page_shop', ['shop' => $shop,'products'=> $products]);
+        }
+    }
+
+    public function edit($id){
+        $my_id = Auth::id();
+        $check_shop = shop::find($id)->user_id;
+        if($my_id == $check_shop){
+            $shop = shop::find($id);
+            return view('edit_shops', compact('shop'));
+        }else{
+            
+        }
+    }
+
+    public function update($id){
+        $my_id = Auth::id();
+        $check_shop = shop::find($id)->user_id;
+        if($my_id == $check_shop){
+            $shop = shop::find($id);
+            $shop->user_id = Auth::id();
+            $shop->name = $input["name"];
+            $shop->description = $input["description"];
+            $shop->save();
+
+            return redirect()->route('shops.show', $shop->id);
+        }else{
+            return redirect(route('shop.my_page'));
+        }
     }
 }

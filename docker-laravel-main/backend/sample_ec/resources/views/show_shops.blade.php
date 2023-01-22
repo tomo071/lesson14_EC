@@ -1,37 +1,52 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    </head>
+@section('content')
     <body>
-        <div class="container mx-5 text-center">
+        <div class="container text-center">
             <div class="row m-4">
-                <div class="col-5 m-1">
+                <div class="col-6">
                     <div class="m-3 text-center">
-                        <h3 class="m-1">商品名:{{ $show->name }}</h3>
-                        <h4 class="m-3">価格：{{ $show->price }}￥</h4>
-                        <a href="{{ route('shops.show',$product->shop_id) }}">
-                            {{ $product->use->id }}
-                        </a>
+                        <h2 class="m-1">shop名:{{ $shop->name }}</h3>
+                        <p>開設者：＃{{ $shop->user->name }}</p>
                     </div>
                 </div>
-                <div class="col-5 m-1">
+                <div class="col-6">
                     <div class="m-3 text-center">
-                        <h4 class="m-1">商品説明</h4>
-                        <p>{{ $show->description }}</p>
+                        <h4 class="m-1">shop概要</h4>
+                        <p>{{ $shop->description }}</p>
                     </div>
                 </div>
             </div>
             <div class="row mt-4">
-
+                <div class="col-12 mt-5">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">商品ID</th>
+                                <th scope="col">商品名</th>
+                                <th scope="col">価格（円）</th>
+                                <th scope="col">在庫</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($shop->products as $product)
+                            <tr>
+                                <td>{{ $product->id }}</th>
+                                <td>{{ $product->name }}</td>
+                                <td>{{ $product->price }}</td>
+                                <td>{{ $product->stock }}</td>
+                                <td>
+                                    <a href="{{ route('products.show', $product->id) }}">
+                                        <button class="btn btn-outline-primary">商品詳細</button>
+                                    </a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </body>
-</html>
+@endsection

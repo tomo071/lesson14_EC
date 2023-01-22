@@ -1,19 +1,10 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-
-    </head>
+@section('content')
     <body>
-        <form action= "{{ route('products.store') }}" method="POST" id="new">
+        <form action= "{{ route('products.update',$Product->id) }}" method="POST" id="new">
         @csrf
-
+        @method('PUT')
             <div class="form-group">
                 <label for="subject">
                     商品名
@@ -22,7 +13,7 @@
                     id="name"
                     type="text"
                     name="name"
-                    value="{{old('name')}}"
+                    value="{{old('name')?: $Product->name}}"
                     class="form-control"
                 >
             </div>
@@ -34,7 +25,7 @@
                 <textarea
                     id="new"
                     name="description"
-                    value="{{old('description')}}"
+                    value="{{old('description')?: $Product->description}}"
                     class="form-control"
                     rows="8"
                 >
@@ -48,7 +39,7 @@
                 <input
                     type="number"
                     name="price"
-                    value="{{old('price')}}"
+                    value="{{old('price')?: $Product->price}}"
                     class="form-control"
                 >
             </div>
@@ -60,15 +51,15 @@
                 <input
                     type="number"
                     name="stock"
-                    value="{{old('stock')}}"
+                    value="{{old('stock')?: $Product->stock}}"
                     class="form-control"
                 >
             </div>
 
             <button type="submit" class="btn btn-primary">
-                投稿する
+                編集する
             </button>
 
         </form>
     </body>
-</html>
+@endsection

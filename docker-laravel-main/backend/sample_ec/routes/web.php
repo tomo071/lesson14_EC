@@ -11,24 +11,22 @@
 |
 */
 
-Route::get('/top', function () {
-    return view('top');
-});
-
-Route::get('/new', function () {
-    return view('new_products');
-});
-
-Route::get('/message', function () {
-    return view('message');
-})->name('message');
-
-Route::resource('/products', 'ProductController');
-
-Route::resource('/shops', 'ShopController');
-
-Route::get('/shop/my_page', 'ShopController@my_page')->name('shop.my_page');
+Route::get('/top', 'ShopController@top')->name('top');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/message', function () {
+        return view('message');
+    })->name('message');
+
+    Route::resource('/products', 'ProductController');
+
+    Route::resource('/shops', 'ShopController');
+
+    Route::get('/shop/my_page', 'ShopController@my_page')->name('shop.my_page');
+
+});
