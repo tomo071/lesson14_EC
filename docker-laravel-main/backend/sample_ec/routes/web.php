@@ -23,6 +23,8 @@ Route::middleware(['auth'])->group(function () {
         return view('message');
     })->name('message');
 
+    Route::get('/export', 'ShopController@export')->name('export');
+
     Route::resource('/products', 'ProductController');
 
     Route::resource('/shops', 'ShopController');

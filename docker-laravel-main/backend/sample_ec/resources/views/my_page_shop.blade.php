@@ -24,7 +24,7 @@
                         <a href="{{ route('shops.edit',$shop->id) }}">
                             <button class="btn btn-success">ショップ情報編集</button>
                         </a>
-                        <a href="{{ route('shops.create') }}">
+                        <a href="{{ route('export') }}">
                             <button class="btn btn-success">投稿商品CSV取得</button>
                         </a>
                     </div>

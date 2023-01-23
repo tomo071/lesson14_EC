@@ -4,17 +4,30 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Shop;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 
-
-
+use Illuminate\Support\Facades\Storage;
+use League\Csv\Writer;
+use League\Csv\CharsetConverter;
+use League\Csv\Reader;
+use SplTempFileObject;
 
 class ShopController extends Controller
 {
 
     public function top(){
         $shop = shop::all();
-        return view('top', compact('shop'));
+
+        $my_id = Auth::id();
+        $check_shop = Shop::where('user_id', '=', $my_id)->count();
+        if($check_shop > 0){
+            $create_shop = false ;
+        }else{
+            $create_shop = true ;
+        }
+
+        return view('top', compact('shop', 'create_shop'));
     }
 
     public function create(){
@@ -38,6 +51,33 @@ class ShopController extends Controller
 
             return redirect(route('shop.my_page'));
         }
+    }
+
+    public function export()
+    {
+        
+        $my_id = Auth::id();
+        $my_shop_id = Shop::where('user_id', '=', $my_id)->pluck('id')->first();
+        $products = Product::where('shop_id','=',$my_shop_id)->get();
+        if($product == null){
+            $data = [['name','price']];
+            foreach ($products as $product) {
+                $data[] = [$product->name, $product->price];
+            }
+            $csv = Writer::createFromFileObject(new SplTempFileObject());
+            $csv->insertAll($data);
+            $csv->setOutputBOM(Reader::BOM_UTF8);
+            $headers = [
+                'Content-Type' => 'text/csv',
+                'Content-Disposition' => 'attachment; filename="products.csv"',
+            ];
+            return response()->streamDownload(function () use ($csv) {
+                echo $csv->getContent();
+            }, 'products.csv', $headers);
+        }else{
+
+        }
+        
     }
 
     public function index(){
@@ -69,11 +109,11 @@ class ShopController extends Controller
             $shop = shop::find($id);
             return view('edit_shops', compact('shop'));
         }else{
-            
+            return redirect()->route('shop.my_page');
         }
     }
 
-    public function update($id){
+    public function update(Request $request, $id){
         $my_id = Auth::id();
         $check_shop = shop::find($id)->user_id;
         if($my_id == $check_shop){

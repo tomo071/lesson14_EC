@@ -57,24 +57,41 @@ class ProductController extends Controller
         }
     }
 
-    public function update($id){
+    public function update(Request $request, $id){
         $my_id = Auth::id();
         $my_shop_id = Shop::where('user_id', '=', $my_id)->pluck('id')->first();
-
         $check_Product = Product::find($id)->shop_id;
+
         if($my_shop_id == $check_Product ){
-            $Product->name = $input["name"];
-            $Product->description = $input["description"];
-            $Product->price = $input["price"];
-            $Product->stock = $input["stock"];
-            $Product->save();
+            $input = $request->only('name','description','price','stock');
+            $product = product::find($id);
+            $product->name = $input["name"];
+            $product->description = $input["description"];
+            $product->price = $input["price"];
+            $product->stock = $input["stock"];
+            $product->save();
             
-            return redirect()->route('products.show', $Product->id);
+            return redirect()->route('products.show', $product->id);
         }else{
             return redirect()->route('shop.my_page');
         }
-
-        
     }
+
+    public function destroy($id){
+        $my_id = Auth::id();
+        $my_shop_id = Shop::where('user_id', '=', $my_id)->pluck('id')->first();
+        $check_Product = Product::find($id)->shop_id;
+
+        if($my_shop_id == $check_Product ){
+
+            $product = product::find($id);
+            $product->delete();
+            
+            return redirect()->route('shop.my_page');
+        }else{
+            return redirect()->route('message')->with();
+        }
+    }
+
 
 }

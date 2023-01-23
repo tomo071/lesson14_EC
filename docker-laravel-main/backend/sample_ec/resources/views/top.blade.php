@@ -4,17 +4,24 @@
     <body>
         <div class="container text-center">
             @auth
-                <div class="row mt-3">
-                    <div class="col-4">
-                    <h1>sample_ec</h1>
+                <h1>sample_ec</h1>
+                <div class="row mt-5">
+                    <div class="col-12">
+                        @if($create_shop)
+                            <button class="btn btn-outline-secondary">商品一覧</button>
+                            <button class="btn btn-outline-secondary">ショップ登録</button>
+                        @else
+                            <button class="btn btn-outline-secondary">商品一覧</button>
+                            <button class="btn btn-outline-secondary">マイページ</button>
+                        @endif
                     </div>
                 </div>
             @else
                 <h1>ようこそsample_ecへ!!</h1>
                 <div class="row mt-5">
                     <div class="col-12">
-                        <button class="btn btn-outline-secondary">products</button>
-                        <button class="btn btn-outline-secondary">shops</button>
+                        <button class="btn btn-outline-secondary">商品一覧</button>
+                        <button class="btn btn-outline-secondary">マイページ</button>
                     </div>
                 </div>
             @endauth
