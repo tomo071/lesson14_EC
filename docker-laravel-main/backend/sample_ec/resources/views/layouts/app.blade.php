@@ -55,15 +55,15 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    
+                            
                                     <a class="dropdown-item" href="{{ route('top') }}">
-                                        マイページ
+                                        トップ
                                     </a>                                
-
+                                
                                     <a class="dropdown-item" href="{{ route('products.index') }}">
                                         商品一覧
                                     </a>
-
+                                
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
