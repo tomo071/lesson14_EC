@@ -59,24 +59,20 @@ class ShopController extends Controller
         $my_id = Auth::id();
         $my_shop_id = Shop::where('user_id', '=', $my_id)->pluck('id')->first();
         $products = Product::where('shop_id','=',$my_shop_id)->get();
-        if($product == null){
-            $data = [['name','price']];
-            foreach ($products as $product) {
-                $data[] = [$product->name, $product->price];
-            }
-            $csv = Writer::createFromFileObject(new SplTempFileObject());
-            $csv->insertAll($data);
-            $csv->setOutputBOM(Reader::BOM_UTF8);
-            $headers = [
-                'Content-Type' => 'text/csv',
-                'Content-Disposition' => 'attachment; filename="products.csv"',
-            ];
-            return response()->streamDownload(function () use ($csv) {
-                echo $csv->getContent();
-            }, 'products.csv', $headers);
-        }else{
-
+        $data = [['name','price']];
+        foreach ($products as $product) {
+            $data[] = [$product->name, $product->price];
         }
+        $csv = Writer::createFromFileObject(new SplTempFileObject());
+        $csv->insertAll($data);
+        $csv->setOutputBOM(Reader::BOM_UTF8);
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="products.csv"',
+        ];
+        return response()->streamDownload(function () use ($csv) {
+            echo $csv->getContent();
+        }, 'products.csv', $headers);
         
     }
 
@@ -117,6 +113,7 @@ class ShopController extends Controller
         $my_id = Auth::id();
         $check_shop = shop::find($id)->user_id;
         if($my_id == $check_shop){
+            $input = $request->only('name','description');
             $shop = shop::find($id);
             $shop->user_id = Auth::id();
             $shop->name = $input["name"];

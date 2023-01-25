@@ -59,7 +59,7 @@
 
                     <div class="text-right">
                         <button type="submit" class="btn btn-primary">
-                            投稿する
+                            更新する
                         </button>
                     </div>
 

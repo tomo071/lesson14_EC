@@ -58,12 +58,19 @@
                         </a>
                     </div>
                 @else
-                    <div class="col-12 mt-5">
-                        <a href="{{ route('shop.my_page') }}">
+                    <div class="col-6 mt-5">
+                        <a href="{{ route('products.edit', $product->id) }}">
                             <button type="button" class="btn btn-outline-primary">
-                                マイページ
+                                編集する
                             </button>
                         </a>
+                    </div>
+                    <div class="col-6 mt-5">
+                        <form action="{{ route('products.destroy', $product->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-outline-danger">削除する</button>
+                        </form>
                     </div>
                 @endif
             </div>
