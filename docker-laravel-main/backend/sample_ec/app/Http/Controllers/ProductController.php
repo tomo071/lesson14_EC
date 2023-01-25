@@ -100,8 +100,8 @@ class ProductController extends Controller
         $check_stock = $stock-$input["stock"];
         $product = product::find($id);
 
-        if($stock > 0){
-
+        if($stock > 0)
+        {
             if($check_stock < 0 || !is_numeric($input["stock"]) || $input["stock"] < 1 ){
                 return redirect()->route('products.show', $product->id)->with('message', '正しい値を入力してください');
             }else{
@@ -132,6 +132,5 @@ class ProductController extends Controller
             return redirect()->route('message')->with('message', '不正なアクセスです');
         }
     }
-
 
 }
