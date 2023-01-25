@@ -14,11 +14,13 @@ use Validator;
 class ProductController extends Controller
 {
 
-    public function create(){
+    public function create()
+    {
         return view('new_products');
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $input = $request->only('user_id','name','description','price','stock');
         $my_id = Auth::id();
         $my_shop_id = Shop::where('user_id', '=', $my_id)->pluck('id')->first();
@@ -34,12 +36,14 @@ class ProductController extends Controller
         return redirect()->route('products.show', $Product->id);
     }
 
-    public function index(){
+    public function index()
+    {
         $products = product::all();
         return view('index_products', compact('products'));
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $product = product::find($id);
         $my_id = Auth::id();
         $my_shop_id = Shop::where('user_id', '=', $my_id)->pluck('id')->first();
@@ -54,7 +58,8 @@ class ProductController extends Controller
         return view('show_products', compact('product','buy'));
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $my_id = Auth::id();
         $my_shop_id = Shop::where('user_id', '=', $my_id)->pluck('id')->first();
 
@@ -67,7 +72,8 @@ class ProductController extends Controller
         }
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $my_id = Auth::id();
         $my_shop_id = Shop::where('user_id', '=', $my_id)->pluck('id')->first();
         $check_Product = Product::find($id)->shop_id;
@@ -87,14 +93,17 @@ class ProductController extends Controller
         }
     }
 
-    public function buy(Request $request, $id){
-            $input = $request->only('stock');
-            $stock = product::find($id)->stock;
-            $check_stock = $stock-$input["stock"];
-            $product = product::find($id);
+    public function buy(Request $request, $id)
+    {
+        $input = $request->only('stock');
+        $stock = product::find($id)->stock;
+        $check_stock = $stock-$input["stock"];
+        $product = product::find($id);
+
         if($stock > 0){
-            if($check_stock < 0){
-                return redirect()->route('products.show', $product->id)->with('message', '在庫以上に購入はできません');
+
+            if($check_stock < 0 || !is_numeric($input["stock"]) || $input["stock"] < 1 ){
+                return redirect()->route('products.show', $product->id)->with('message', '正しい値を入力してください');
             }else{
                 $product->stock = $check_stock;
                 $product->save();
@@ -107,7 +116,8 @@ class ProductController extends Controller
         
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $my_id = Auth::id();
         $my_shop_id = Shop::where('user_id', '=', $my_id)->pluck('id')->first();
         $check_Product = Product::find($id)->shop_id;

@@ -16,7 +16,8 @@ use SplTempFileObject;
 class ShopController extends Controller
 {
 
-    public function top(){
+    public function top()
+    {
         $shop = shop::all();
 
         $my_id = Auth::id();
@@ -30,11 +31,13 @@ class ShopController extends Controller
         return view('top', compact('shop', 'create_shop'));
     }
 
-    public function create(){
+    public function create()
+    {
         return view('new_shops');
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $my_id = Auth::id();
         $check_shop = Shop::where('user_id', '=', $my_id)->count();
 
@@ -59,34 +62,41 @@ class ShopController extends Controller
         $my_id = Auth::id();
         $my_shop_id = Shop::where('user_id', '=', $my_id)->pluck('id')->first();
         $products = Product::where('shop_id','=',$my_shop_id)->get();
+
         $data = [['name','price']];
         foreach ($products as $product) {
             $data[] = [$product->name, $product->price];
         }
+
         $csv = Writer::createFromFileObject(new SplTempFileObject());
         $csv->insertAll($data);
         $csv->setOutputBOM(Reader::BOM_UTF8);
+
         $headers = [
             'Content-Type' => 'text/csv',
             'Content-Disposition' => 'attachment; filename="products.csv"',
         ];
+
         return response()->streamDownload(function () use ($csv) {
             echo $csv->getContent();
         }, 'products.csv', $headers);
         
     }
 
-    public function index(){
+    public function index()
+    {
         $shops = shop::all();
         return view('index_shop', compact('shops'));
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $shop = shop::find($id);
         return view('show_shops', compact('shop'));
     }
 
-    public function my_page(){
+    public function my_page()
+    {
         $my_id = Auth::id();
         $shop = Shop::where('user_id', '=', $my_id)->first();
         $products = Shop::with('products')->where('user_id', '=', $my_id)->get();
@@ -98,7 +108,8 @@ class ShopController extends Controller
         }
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $my_id = Auth::id();
         $check_shop = shop::find($id)->user_id;
         if($my_id == $check_shop){
