@@ -2,6 +2,7 @@
 
 @section('content')
         <div class="container">
+            <h1 class="mt-5">{{ session('message') }}</h1>
             <h1 class="mt-5">商品の詳細</h1>
             <div class="row m-4 text-center">
                 <div class="col-6 mt-5">
@@ -24,20 +25,47 @@
                 </div>
             </div>
             <div class="row mt-5 text-center">
-                <div class="col-6 mt-5 text-right">
-                    <a href="{{ url('/top') }}">
-                        <button type="button" class="btn btn-primary">
-                            トップに戻る
-                        </button>
-                    </a>
-                </div>
-                <div class="col-6 mt-5 text-left">
-                    <a href="{{ route('shop.my_page') }}">
-                        <button type="button" class="btn btn-secondary">
-                            購入する
-                        </button>
-                    </a>
-                </div>
+                @if($buy)
+                    @if($product->stock > 0)
+                    <div class="col-5 m-5 text-center">
+                    <form action= "{{ route('buy',$product->id) }}" method="POST" class="d-flex text-right">
+                        @csrf
+                        @method('PUT')
+                        <h3>個数：</h3>
+                            <div class="d-flex bd-highlight text-center">
+                                <input
+                                    type="number"
+                                    name="stock"
+                                    value="{{old('stock')}}"
+                                    class="form-control"
+                                >
+                            </div>
+                            <div class="bd-highlight">
+                                <button type="submit" class="btn btn-primary">購入する</button>
+                            </div>
+                        </form>
+                    </div>
+                    @else
+                    <div class="col-5 m-5 text-center">
+                        <h3>売り切れ。。。</h3>
+                    </div>
+                    @endif
+                    <div class="col-5 mt-5">
+                        <a href="{{ route('products.index') }}">
+                            <button type="button" class="btn btn-outline-primary">
+                                商品一覧
+                            </button>
+                        </a>
+                    </div>
+                @else
+                    <div class="col-12 mt-5">
+                        <a href="{{ route('shop.my_page') }}">
+                            <button type="button" class="btn btn-outline-primary">
+                                マイページ
+                            </button>
+                        </a>
+                    </div>
+                @endif
             </div>
         </div>
 @endsection

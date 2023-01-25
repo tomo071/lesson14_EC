@@ -3,6 +3,7 @@
 @section('content')
     <body>
         <div class="container text-center">
+        <h1 class="mt-5">{{ session('message') }}</h1>
             <div class="row m-4">
                 <div class="col-6">
                     <div class="m-3 text-center">
@@ -53,9 +54,11 @@
                                     <a href="{{ route('products.edit', $product->id) }}">
                                         <button class="btn btn-outline-primary">編集</button>
                                     </a>
-                                    <a href="{{ route('products.show', $product->id) }}">
-                                        <button class="btn btn-outline-danger">削除</button>
-                                    </a>
+                                    <form action="{{ route('products.destroy', $product->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-outline-danger">削除</button>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach

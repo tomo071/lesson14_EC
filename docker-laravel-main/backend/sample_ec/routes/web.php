@@ -25,6 +25,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/export', 'ShopController@export')->name('export');
 
+    Route::put('/buy/{id}', 'ProductController@buy')->name('buy');
+
     Route::resource('/products', 'ProductController');
 
     Route::resource('/shops', 'ShopController');

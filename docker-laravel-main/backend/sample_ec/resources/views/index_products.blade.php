@@ -30,7 +30,11 @@
                                 @else
                                     <tr>
                                         <td>{{ $product->shop->name }}</td>
-                                        <td>{{ $product->name }}</td>
+                                        <td>
+                                            <a href="{{ route('products.show', $product->id) }}">
+                                                {{ $product->name }}
+                                            </a>
+                                        </td>
                                         <td>{{ $product->price }}</td>
                                         <td>{{ $product->stock }}</td>
                                     </tr>

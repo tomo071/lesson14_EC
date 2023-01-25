@@ -41,7 +41,17 @@ class ProductController extends Controller
 
     public function show($id){
         $product = product::find($id);
-        return view('show_products', compact('product'));
+        $my_id = Auth::id();
+        $my_shop_id = Shop::where('user_id', '=', $my_id)->pluck('id')->first();
+        $check_Product = Product::find($id)->shop_id;
+
+        if( $my_shop_id == $check_Product ){
+            $buy = false;
+        }else{
+            $buy = true;
+        }
+        
+        return view('show_products', compact('product','buy'));
     }
 
     public function edit($id){
@@ -77,6 +87,26 @@ class ProductController extends Controller
         }
     }
 
+    public function buy(Request $request, $id){
+            $input = $request->only('stock');
+            $stock = product::find($id)->stock;
+            $check_stock = $stock-$input["stock"];
+            $product = product::find($id);
+        if($stock > 0){
+            if($check_stock < 0){
+                return redirect()->route('products.show', $product->id)->with('message', '在庫以上に購入はできません');
+            }else{
+                $product->stock = $check_stock;
+                $product->save();
+                return redirect()->route('products.show', $product->id)->with('message', '購入しました');
+            }
+            
+        }else{
+            return redirect()->route('products.show', $product->id)->with('message', '在庫がありません');
+        }
+        
+    }
+
     public function destroy($id){
         $my_id = Auth::id();
         $my_shop_id = Shop::where('user_id', '=', $my_id)->pluck('id')->first();
@@ -87,9 +117,9 @@ class ProductController extends Controller
             $product = product::find($id);
             $product->delete();
             
-            return redirect()->route('shop.my_page');
+            return redirect()->route('shop.my_page')->with('message', '商品を削除しました');
         }else{
-            return redirect()->route('message')->with();
+            return redirect()->route('message')->with('message', '不正なアクセスです');
         }
     }
 
