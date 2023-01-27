@@ -22,14 +22,21 @@
 
                                 @if ($product->stock === 0)
                                     <tr>
-                                        <td>{{ $product->shop->name }}</td>
+                                        <td>
+                                            <a href="{{ route('shops.show', $product->shop_id) }}">
+                                                {{ $product->shop->name }}</td>
+                                            </a>
+                                        </td>
                                         <td>{{ $product->name }}</td>
                                         <td>{{ $product->price }}</td>
                                         <td>SOLD OUT</td>
                                     </tr>
                                 @else
                                     <tr>
-                                        <td>{{ $product->shop->name }}</td>
+                                        <td>
+                                            <a href="{{ route('shops.show', $product->shop_id) }}">
+                                                {{ $product->shop->name }}</td>
+                                            </a>
                                         <td>
                                             <a href="{{ route('products.show', $product->id) }}">
                                                 {{ $product->name }}

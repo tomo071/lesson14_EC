@@ -26,21 +26,19 @@
                                 <th scope="col">商品名</th>
                                 <th scope="col">価格（円）</th>
                                 <th scope="col">在庫</th>
-                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($shop->products as $product)
                             <tr>
                                 <td>{{ $product->id }}</th>
-                                <td>{{ $product->name }}</td>
-                                <td>{{ $product->price }}</td>
-                                <td>{{ $product->stock }}</td>
                                 <td>
                                     <a href="{{ route('products.show', $product->id) }}">
-                                        <button class="btn btn-outline-primary">商品詳細</button>
+                                        {{ $product->name }}
                                     </a>
                                 </td>
+                                <td>{{ $product->price }}</td>
+                                <td>{{ $product->stock }}</td>
                             </tr>
                             @endforeach
                         </tbody>
