@@ -4,6 +4,7 @@
     <body>
         <div class="container text-center">
             @auth
+            {{ session('message') }}
                 <h1>sample_ec</h1>
                 <div class="row mt-5">
                     <div class="col-12">

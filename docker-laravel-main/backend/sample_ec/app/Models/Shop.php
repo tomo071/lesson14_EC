@@ -14,6 +14,14 @@ class Shop extends Model
     {
         return $this->hasMany('App\Models\Product');
     }
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($shop) {
+            $shop->products()->delete();
+        });
+    }
 
     protected $fillable = ['id','user_id', 'name', 'description'];
     protected $table = "shops";

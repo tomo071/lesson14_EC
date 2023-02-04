@@ -63,9 +63,9 @@ class ShopController extends Controller
         $my_shop_id = Shop::where('user_id', '=', $my_id)->pluck('id')->first();
         $products = Product::where('shop_id','=',$my_shop_id)->get();
 
-        $data = [['name','price']];
+        $data = [['name','price','stock']];
         foreach ($products as $product) {
-            $data[] = [$product->name, $product->price];
+            $data[] = [$product->name, $product->price, $product->stock];
         }
 
         $csv = Writer::createFromFileObject(new SplTempFileObject());
@@ -120,6 +120,22 @@ class ShopController extends Controller
         }
     }
 
+    public function destroy($id)
+    {
+        $my_id = Auth::id();
+        $check_shop = shop::find($id)->user_id;
+        if($my_id == $check_shop){
+            $shop = shop::find($id);
+            $shop->delete();
+
+            return redirect()->route('top')->with('message', 'ショップを削除しました');
+        }else{
+            return redirect(route('shop.my_page'))->with('message', '自身のショップのみ編集可能です');;
+        }
+    }
+
+
+
     public function update(Request $request, $id){
         $my_id = Auth::id();
         $check_shop = shop::find($id)->user_id;
@@ -131,9 +147,13 @@ class ShopController extends Controller
             $shop->description = $input["description"];
             $shop->save();
 
-            return redirect()->route('shops.show', $shop->id);
+            return redirect()->route('shop.my_page')->with('message', '更新しました！');
         }else{
-            return redirect(route('shop.my_page'));
+            return redirect(route('shop.my_page'))->with('message', '自身のショップのみ編集可能です');;
         }
+    }
+
+    private function params(Request $request){
+        return $input = $request->only('name','description');
     }
 }

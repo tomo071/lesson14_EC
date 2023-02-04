@@ -22,6 +22,11 @@
             <div class="row mt-4">
                 <div class="col-12 mt-5">
                     <div class="m-1 text-right">
+                        <form action="{{ route('shops.destroy',$shop->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger" type="submit">ショップ削除</button>
+                        </form>
                         <a href="{{ route('shops.edit',$shop->id) }}">
                             <button class="btn btn-success">ショップ情報編集</button>
                         </a>
