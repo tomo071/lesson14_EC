@@ -62,8 +62,8 @@ class ProductController extends Controller
     {
         $my_id = Auth::id();
         $my_shop_id = Shop::where('user_id', '=', $my_id)->pluck('id')->first();
-
         $check_Product = Product::find($id)->shop_id;
+        
         if( $my_shop_id == $check_Product ){
             $product = product::find($id);
             return view('edit_products', compact('product'));

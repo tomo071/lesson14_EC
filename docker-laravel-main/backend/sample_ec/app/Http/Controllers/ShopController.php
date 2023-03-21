@@ -80,7 +80,7 @@ class ShopController extends Controller
         return response()->streamDownload(function () use ($csv) {
             echo $csv->getContent();
         }, 'products.csv', $headers);
-        
+    
     }
 
     public function index()
@@ -130,7 +130,7 @@ class ShopController extends Controller
 
             return redirect()->route('top')->with('message', 'ショップを削除しました');
         }else{
-            return redirect(route('shop.my_page'))->with('message', '自身のショップのみ編集可能です');;
+            return redirect(route('shop.my_page'))->with('message', '自身のショップのみ編集可能です');
         }
     }
 
@@ -149,11 +149,7 @@ class ShopController extends Controller
 
             return redirect()->route('shop.my_page')->with('message', '更新しました！');
         }else{
-            return redirect(route('shop.my_page'))->with('message', '自身のショップのみ編集可能です');;
+            return redirect(route('shop.my_page'))->with('message', '自身のショップのみ編集可能です');
         }
-    }
-
-    private function params(Request $request){
-        return $input = $request->only('name','description');
     }
 }
